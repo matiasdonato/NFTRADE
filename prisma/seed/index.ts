@@ -32,6 +32,7 @@ async function seed() {
     /* SEED COLLECTIONS */
     const usersCreated = await prisma.user.findMany({ select: { id: true } })
     await prisma.collection.createMany({
+      // @ts-ignore
       data: createCollections(usersCreated.map((u) => u.id)),
     })
 
