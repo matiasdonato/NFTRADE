@@ -45,7 +45,7 @@ const NftsOwned: NextPage<Props> = ({ user }) => {
                 nfts
                   // @ts-ignore
                   .filter((nft) => nft.nft.erased === false)
-
+                  // @ts-ignore
                   .map((el) => (
                     <div
                       key={el.nft.id}
