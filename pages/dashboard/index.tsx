@@ -1,3 +1,4 @@
+import BarChart from '@components/charts/barchart'
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
 import UserTable from '@components/dashboard/Tables/userTable'
@@ -60,11 +61,11 @@ const DashBoard: NextPage = () => {
               <p>My coins</p>
             </div>
           </div>
-          {/* <div className="w-full flex items-center flex-wrap justify-between mt-10">
+          <div className="w-full flex items-center flex-wrap justify-between mt-10">
             <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
               <BarChart userData={data} />
             </div>
-            {data?.userSells.approved === 0 ? (
+            {/* {data?.userSells.approved === 0 ? (
               <div className="flex flex-col items-center justify-center bg-[#303339] rounded-2xl w-[30%] h-[46.7vh]">
                 <div className="w-48">
                   <Image src={Cry} alt="cry" />
@@ -85,8 +86,8 @@ const DashBoard: NextPage = () => {
               <div className="bg-[#303339] rounded-2xl w-[30%] p-2">
                 <PieChart userData={data} />
               </div>
-            )}
-          </div> */}
+            )} */}
+          </div>
           <div className="w-full flex flex-col mt-10">
             <span className="text-center mb-8 text-2xl font-bold text-gray-400">
               Your <span className="text-blue-600">NFT&apos;s</span>

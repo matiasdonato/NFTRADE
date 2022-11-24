@@ -19,6 +19,7 @@ export default class PaymentService {
       notification_url:
         'https://f25f-190-7-10-181.sa.ngrok.io/api/notificaciones',
       items: datos,
+      client_id: '6565580708292747',
       back_urls: {
         failure: '/failure',
         pending: '/pending',
