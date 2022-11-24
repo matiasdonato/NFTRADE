@@ -1,5 +1,6 @@
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
+import SvgLoading from '@components/icons/svgLoading'
 import fetcher from '@lib/fetcher'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
@@ -11,7 +12,6 @@ const DashBoard: NextPage = () => {
   const { data: session } = useSession()
   const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
   const { data: userCoins } = useSWR(`/api/user/${session?.user.id}`, fetcher)
-  console.log(userCoins)
   return (
     <section className="dashboard__home flex bg-gray-200 dark:bg-[#202225] transition-all">
       <Head>
@@ -27,7 +27,7 @@ const DashBoard: NextPage = () => {
               Welcome {session?.user.name}!
             </h1>
           </div>
-          {/* <div className="main-boxes flex justify-center items-center text-center w-full">
+          <div className="main-boxes flex justify-center items-center text-center w-full">
             <div className="left flex flex-col bg-[#303339] text-gray-400 rounded-xl w-full p-5 mr-3 drop-shadow-md">
               <span className="text-xl font-bold text-blue-600 flex justify-center">
                 {data ? (
@@ -51,7 +51,7 @@ const DashBoard: NextPage = () => {
             <div className="right flex flex-col bg-[#303339] text-gray-400 rounded-xl w-full p-5 ml-3 drop-shadow-md">
               <span className="text-xl font-bold text-blue-600 flex justify-center">
                 {userCoins ? (
-                  parseInt(userCoins?.coins).toLocaleString('es-AR')
+                  userCoins?.coins
                 ) : (
                   <SvgLoading className="animate-spin h-6 w-6" />
                 )}
@@ -59,7 +59,7 @@ const DashBoard: NextPage = () => {
               <p>My coins</p>
             </div>
           </div>
-          <div className="w-full flex items-center flex-wrap justify-between mt-10">
+          {/* <div className="w-full flex items-center flex-wrap justify-between mt-10">
             <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
               <BarChart userData={data} />
             </div>
