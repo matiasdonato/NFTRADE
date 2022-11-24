@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
+
 import Footer from '@components/footer'
 import SvgCoin from '@components/icons/svgCoin'
 import SvgPlus from '@components/icons/svgPlus'
@@ -52,6 +54,7 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
                       <div className="relative">
                         <div className="rounded-xl border-spacing-2 ">
                           <Image
+                            // @ts-ignore
                             src={el.image}
                             height={'1000'}
                             width={'1000'}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
 /* this endpoint is for testing purposes */
@@ -19,6 +20,7 @@ export default async function updateCollection(
           name,
           image,
           description: description,
+          // @ts-ignore
           disccount,
           ownerId,
         },

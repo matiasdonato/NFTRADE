@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
 /* this endpoint is for testing purposes */
@@ -38,6 +39,7 @@ export default async function updateNft(
               },
             },
             price: Math.round(
+              // @ts-ignore
               oldCollection.price -
                 nft.price * (1 - oldCollection.discount / 100),
             ),

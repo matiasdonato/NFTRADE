@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '@lib/db'
 /* this endpoint is for testing purposes */
 
@@ -39,6 +40,7 @@ const getCollectionsCreated = async ({
     return user
   } catch (e) {
     console.log(e)
+    // @ts-ignore
     return null
   }
 }

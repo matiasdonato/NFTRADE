@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '@lib/db'
 import type { CollectionDetailResponse } from 'types/api-responses'
 
@@ -40,6 +41,7 @@ const getCollectionById = async ({
         },
       },
     })
+    // @ts-ignore
     return collection
   } catch (e) {
     return null

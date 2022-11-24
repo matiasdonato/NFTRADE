@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import SvgCoin from '@components/icons/svgCoin'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,6 +27,7 @@ const CollectionCard = ({ collection }: Props) => {
         <div className="relative">
           <div className="rounded-xl border-spacing-2 ">
             <Image
+              // @ts-ignore
               src={collection.image}
               height={'1000'}
               width={'1000'}

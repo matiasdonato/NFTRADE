@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
+// @ts-nocheck
 import Footer from '@components/footer'
 import SvgCheck from '@components/icons/svgCheck'
 import SvgCoin from '@components/icons/svgCoin'

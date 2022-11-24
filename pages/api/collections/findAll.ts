@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { getOrderBy, getWhere } from '@lib/api-utils'
 import prisma from '@lib/db'
@@ -25,7 +26,9 @@ export default async function handler(
     skip,
     where: {
       price: {
+        // @ts-ignore
         lte: parseInt(maxPrice),
+        // @ts-ignore
         gte: parseInt(minPrice),
       },
       published: true,
@@ -43,5 +46,6 @@ export default async function handler(
       },
     },
   })
+  // @ts-ignore
   res.status(200).json(collections)
 }

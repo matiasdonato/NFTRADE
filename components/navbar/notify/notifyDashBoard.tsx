@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import SvgCross from '@components/icons/svgCross'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
@@ -82,58 +83,63 @@ const NotifyDashBoard: React.FC<NotifyDashBoardProps> = ({
                         <div
                           className={`overflow-auto divide-y divide-gray-800 dark:divide-gray-700  ${styles.scrollbar}`}
                         >
-                          {data?.notify.map((el, index) => (
-                            <div key={el.id}>
-                              {el.typeNotify === 'comment' && (
-                                <NotifyComment
-                                  key={index}
-                                  id={el.id}
-                                  nameNft={el.nameNft}
-                                  nftId={el.nftId}
-                                  userIdComment={el.userIdComment}
-                                  nameUserComment={el.nameUserComment}
-                                  comment={el.comment}
-                                  createdAt={el.createdAt}
-                                />
-                              )}
-                              {el.typeNotify === 'Liked' && (
-                                <NotifyLiked
-                                  key={index}
-                                  id={el.id}
-                                  userIdLiked={el.userIdLiked}
-                                  nameUserLiked={el.nameUserLiked}
-                                  nftId={el.nftId}
-                                  nameNft={el.nameNft}
-                                  createdAt={el.createdAt}
-                                />
-                              )}
-                              {el.typeNotify === 'buyNft' && (
-                                <NotifyBuyNft
-                                  key={index}
-                                  id={el.id}
-                                  nftId={el.nftId}
-                                  nameNft={el.nameNft}
-                                  compradorId={el.compradorId}
-                                  nameComprador={el.nameComprador}
-                                  vendedorId={el.vendedorId}
-                                  nameVendedor={el.nameVendedor}
-                                  coins={el.coins}
-                                  createdAt={el.createdAt}
-                                />
-                              )}
-                              {el.typeNotify === 'buy' && (
-                                <NotifyBuyCoins
-                                  key={index}
-                                  id={el.id}
-                                  ordenId={el.ordenId}
-                                  coins={el.coins}
-                                  amount={el.amount}
-                                  status={el.status}
-                                  creatredAt={el.creatredAt}
-                                />
-                              )}
-                            </div>
-                          ))}
+                          {
+                            // @ts-ignore
+                            data?.notify.map((el, index) => (
+                              <div key={el.id}>
+                                {el.typeNotify === 'comment' && (
+                                  <NotifyComment
+                                    key={index}
+                                    id={el.id}
+                                    nameNft={el.nameNft}
+                                    nftId={el.nftId}
+                                    // @ts-ignore
+                                    userIdComment={el.userIdComment}
+                                    nameUserComment={el.nameUserComment}
+                                    comment={el.comment}
+                                    createdAt={el.createdAt}
+                                  />
+                                )}
+                                {el.typeNotify === 'Liked' && (
+                                  <NotifyLiked
+                                    key={index}
+                                    id={el.id}
+                                    userIdLiked={el.userIdLiked}
+                                    nameUserLiked={el.nameUserLiked}
+                                    nftId={el.nftId}
+                                    nameNft={el.nameNft}
+                                    createdAt={el.createdAt}
+                                  />
+                                )}
+                                {el.typeNotify === 'buyNft' && (
+                                  <NotifyBuyNft
+                                    key={index}
+                                    id={el.id}
+                                    nftId={el.nftId}
+                                    nameNft={el.nameNft}
+                                    compradorId={el.compradorId}
+                                    nameComprador={el.nameComprador}
+                                    vendedorId={el.vendedorId}
+                                    nameVendedor={el.nameVendedor}
+                                    coins={el.coins}
+                                    createdAt={el.createdAt}
+                                  />
+                                )}
+                                {el.typeNotify === 'buy' && (
+                                  <NotifyBuyCoins
+                                    key={index}
+                                    id={el.id}
+                                    // @ts-ignore
+                                    ordenId={el.ordenId}
+                                    coins={el.coins}
+                                    amount={el.amount}
+                                    status={el.status}
+                                    creatredAt={el.creatredAt}
+                                  />
+                                )}
+                              </div>
+                            ))
+                          }
                         </div>
                       )}
                     </div>

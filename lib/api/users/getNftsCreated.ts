@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '@lib/db'
 /* this endpoint is for testing purposes */
 
@@ -34,6 +35,7 @@ const getNftsCreated = async ({ id }: { id: string }): Promise<userNfts> => {
     return user
   } catch (e) {
     console.log(e)
+    // @ts-ignore
     return null
   }
 }
