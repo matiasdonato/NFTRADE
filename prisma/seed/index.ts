@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '../../lib/db'
 import {
   createCategories,
@@ -14,7 +13,7 @@ const flush = async () => {
       !propertyName.startsWith('_') && !propertyName.startsWith('$'),
   )
 
-  // @ts-ignore
+  // @ts-expect-error invalid model name
   await Promise.all(modelNames.map((model) => prisma[model].deleteMany()))
 }
 
@@ -32,7 +31,6 @@ async function seed() {
     /* SEED COLLECTIONS */
     const usersCreated = await prisma.user.findMany({ select: { id: true } })
     await prisma.collection.createMany({
-      // @ts-ignore
       data: createCollections(usersCreated.map((u) => u.id)),
     })
 
@@ -42,9 +40,7 @@ async function seed() {
     })
     await prisma.nft.createMany({
       data: createNfts(
-        // @ts-ignore
         usersCreated.map((u) => u.id),
-        // @ts-ignore
         collectionsCreated.map((c) => c.id),
       ),
     })

@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { faker } from '@faker-js/faker'
-// @ts-ignore
 import type { Prisma } from '@prisma/client'
 
 export const images = [
