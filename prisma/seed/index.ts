@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import prisma from '../../lib/db'
 import {
   createCategories,
@@ -13,7 +14,7 @@ const flush = async () => {
       !propertyName.startsWith('_') && !propertyName.startsWith('$'),
   )
 
-  // @ts-expect-error invalid model name
+  // @ts-ignore
   await Promise.all(modelNames.map((model) => prisma[model].deleteMany()))
 }
 
