@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
 import type { Prisma } from '@prisma/client'
 
 // Generic error response
