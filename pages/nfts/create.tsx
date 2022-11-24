@@ -130,7 +130,7 @@ const CreateProduct: NextPage<Props> = ({ fallbackData }) => {
         file as File,
       )
 
-    const BUCKET_UPLOAD = process.env.NEXT_PUBLIC_SUPABASE_UPLOAD as string
+    const BUCKET_UPLOAD = 'https://jrgivjodpnydgnfmeelp.supabase.co'
     if (!error) {
       setPreview(`${BUCKET_UPLOAD}/${data.path}`)
       setUploading(false)
