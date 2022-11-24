@@ -1,15 +1,11 @@
-import Cry from '@assets/cry.webp'
-import BarChart from '@components/charts/barchart'
-import PieChart from '@components/charts/pieChart'
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
+import UserTable from '@components/dashboard/Tables/userTable'
 import SvgLoading from '@components/icons/svgLoading'
 import fetcher from '@lib/fetcher'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import useSWR from 'swr'
 import styles from '../../styles/wavinghand.module.css'
 
@@ -64,7 +60,7 @@ const DashBoard: NextPage = () => {
               <p>My coins</p>
             </div>
           </div>
-          <div className="w-full flex items-center flex-wrap justify-between mt-10">
+          {/* <div className="w-full flex items-center flex-wrap justify-between mt-10">
             <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
               <BarChart userData={data} />
             </div>
@@ -90,13 +86,13 @@ const DashBoard: NextPage = () => {
                 <PieChart userData={data} />
               </div>
             )}
-          </div>
-          {/* <div className="w-full flex flex-col mt-10">
+          </div> */}
+          <div className="w-full flex flex-col mt-10">
             <span className="text-center mb-8 text-2xl font-bold text-gray-400">
               Your <span className="text-blue-600">NFT&apos;s</span>
             </span>
             <UserTable />
-          </div> */}
+          </div>
         </div>
       </div>
     </section>
