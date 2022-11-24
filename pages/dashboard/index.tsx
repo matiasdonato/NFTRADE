@@ -16,11 +16,8 @@ import styles from '../../styles/wavinghand.module.css'
 
 const DashBoard: NextPage = () => {
   const { data: session } = useSession()
-  const { data: userCoins } = useSWR(`/api/user/${session?.user.id}`, fetcher)
   const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
-
-  console.log(data)
-
+  const { data: userCoins } = useSWR(`/api/user/${session?.user.id}`, fetcher)
   return (
     <section className="dashboard__home flex bg-gray-200 dark:bg-[#202225] transition-all">
       <Head>
@@ -60,7 +57,7 @@ const DashBoard: NextPage = () => {
             <div className="right flex flex-col bg-[#303339] text-gray-400 rounded-xl w-full p-5 ml-3 drop-shadow-md">
               <span className="text-xl font-bold text-blue-600 flex justify-center">
                 {userCoins ? (
-                  userCoins?.coins
+                  parseInt(userCoins?.coins).toLocaleString('es-AR')
                 ) : (
                   <SvgLoading className="animate-spin h-6 w-6" />
                 )}
@@ -68,12 +65,10 @@ const DashBoard: NextPage = () => {
               <p>My coins</p>
             </div>
           </div>
-          <div className="w-full flex items-center flex-wrap justify-center mt-10">
-            {data?.staticDashData.buyerCoins.length !== 0 && (
-              <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
-                <BarChart userData={data} />
-              </div>
-            )}
+          <div className="w-full flex items-center flex-wrap justify-between mt-10">
+            <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
+              <BarChart userData={data} />
+            </div>
             {data?.userSells.approved === 0 ? (
               <div className="flex flex-col items-center justify-center bg-[#303339] rounded-2xl w-[30%] h-[46.7vh]">
                 <div className="w-48">
