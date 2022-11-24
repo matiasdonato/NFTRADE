@@ -5,7 +5,6 @@ import BlurImage from '@components/ui/blurImage'
 import Modal from '@components/ui/modal'
 import fetcher from '@lib/fetcher'
 import supabase from '@lib/supa'
-
 import { Formik } from 'formik'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
@@ -130,7 +129,7 @@ const CreateProduct: NextPage<Props> = ({ fallbackData }) => {
         file as File,
       )
 
-    const BUCKET_UPLOAD = 'https://jrgivjodpnydgnfmeelp.supabase.co'
+    const BUCKET_UPLOAD = process.env.NEXT_PUBLIC_SUPABASE_UPLOAD as string
     if (!error) {
       setPreview(`${BUCKET_UPLOAD}/${data.path}`)
       setUploading(false)
