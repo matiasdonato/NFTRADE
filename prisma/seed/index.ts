@@ -42,7 +42,9 @@ async function seed() {
     })
     await prisma.nft.createMany({
       data: createNfts(
+        // @ts-ignore
         usersCreated.map((u) => u.id),
+        // @ts-ignore
         collectionsCreated.map((c) => c.id),
       ),
     })
