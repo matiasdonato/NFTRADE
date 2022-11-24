@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
 import Footer from '@components/footer'
@@ -42,6 +43,7 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
           <div className="flex justify-center w-full">
             <div className="flex min-h-[900px] p-8 border-[1px] border-gray-400 rounded-[15px] w-[93%] flex-wrap">
               {nfts.length > 0 &&
+                // @ts-ignore
                 nfts.map((el) => (
                   <div
                     key={el.id}
