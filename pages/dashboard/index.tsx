@@ -7,7 +7,7 @@ const DashBoard: NextPage = () => {
   const { data: session } = useSession()
   const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
 
-  console.log(session)
+  console.log(data)
 
   return (
     <div>HOla</div>
