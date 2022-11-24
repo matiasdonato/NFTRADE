@@ -1,16 +1,9 @@
-import Cry from '@assets/cry.webp'
-import BarChart from '@components/charts/barchart'
-import PieChart from '@components/charts/pieChart'
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
-import UserTable from '@components/dashboard/Tables/userTable'
-import SvgLoading from '@components/icons/svgLoading'
 import fetcher from '@lib/fetcher'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import useSWR from 'swr'
 import styles from '../../styles/wavinghand.module.css'
 
@@ -18,6 +11,7 @@ const DashBoard: NextPage = () => {
   const { data: session } = useSession()
   const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
   const { data: userCoins } = useSWR(`/api/user/${session?.user.id}`, fetcher)
+  console.log(userCoins)
   return (
     <section className="dashboard__home flex bg-gray-200 dark:bg-[#202225] transition-all">
       <Head>
@@ -33,7 +27,7 @@ const DashBoard: NextPage = () => {
               Welcome {session?.user.name}!
             </h1>
           </div>
-          <div className="main-boxes flex justify-center items-center text-center w-full">
+          {/* <div className="main-boxes flex justify-center items-center text-center w-full">
             <div className="left flex flex-col bg-[#303339] text-gray-400 rounded-xl w-full p-5 mr-3 drop-shadow-md">
               <span className="text-xl font-bold text-blue-600 flex justify-center">
                 {data ? (
@@ -97,7 +91,7 @@ const DashBoard: NextPage = () => {
               Your <span className="text-blue-600">NFT&apos;s</span>
             </span>
             <UserTable />
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
