@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -29,6 +30,7 @@ export default async function postNft(
               id: true,
             },
           })
+        // @ts-ignore
         categoriesId = categoriesId.map((c) => c.id)
         const nfts = await prisma.nft.create({
           data: {
