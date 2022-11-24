@@ -1,4 +1,5 @@
 import Cry from '@assets/cry.webp'
+import BarChart from '@components/charts/barchart'
 import PieChart from '@components/charts/pieChart'
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
@@ -15,8 +16,11 @@ import styles from '../../styles/wavinghand.module.css'
 
 const DashBoard: NextPage = () => {
   const { data: session } = useSession()
-  const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
   const { data: userCoins } = useSWR(`/api/user/${session?.user.id}`, fetcher)
+  const { data } = useSWR(`/api/dashboardata?user=${session?.user.id}`, fetcher)
+
+  console.log(data)
+
   return (
     <section className="dashboard__home flex bg-gray-200 dark:bg-[#202225] transition-all">
       <Head>
@@ -64,10 +68,12 @@ const DashBoard: NextPage = () => {
               <p>My coins</p>
             </div>
           </div>
-          <div className="w-full flex items-center flex-wrap justify-between mt-10">
-            {/* <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
-              <BarChart userData={data} />
-            </div> */}
+          <div className="w-full flex items-center flex-wrap justify-center mt-10">
+            {data?.staticDashData.buyerCoins.length !== 0 && (
+              <div className="bg-[#303339] rounded-2xl w-[60%] p-2">
+                <BarChart userData={data} />
+              </div>
+            )}
             {data?.userSells.approved === 0 ? (
               <div className="flex flex-col items-center justify-center bg-[#303339] rounded-2xl w-[30%] h-[46.7vh]">
                 <div className="w-48">
