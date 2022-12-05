@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Footer from '@components/footer'
 import Loading from '@components/loading'
 import CollectionCard from '@components/marketplace/collectionCard'
@@ -34,9 +33,7 @@ const CollectionMarket: NextPage<HomeProps> = () => {
       <NavBar />
       <HeaderMarket
         setOrder={setOrder}
-        // @ts-ignore
         filterValues={filter}
-        // @ts-ignore
         setFilter={setFilter}
         setCardSize={setCardSize}
       />
@@ -46,7 +43,6 @@ const CollectionMarket: NextPage<HomeProps> = () => {
             <Loading />
           ) : (
             collections &&
-            // @ts-ignore
             collections.map((el) => {
               return (
                 <CollectionCard
@@ -59,7 +55,6 @@ const CollectionMarket: NextPage<HomeProps> = () => {
                   price={el.price}
                   image={el.image}
                   description={el.description}
-                  // @ts-ignore
                   likedBy={[]}
                 />
               )

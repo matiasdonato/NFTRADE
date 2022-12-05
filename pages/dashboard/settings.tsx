@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import NavBar from '@components/dashboard/Components/navbar'
 import SideBar from '@components/dashboard/Components/sidebar'
 import fetcher from '@lib/fetcher'
@@ -6,8 +9,8 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import useSWR from 'swr'
-import Default from '../../assets/avataricon.png'
-import Cover from '../../assets/Cover.webp'
+import Default from '../../Assets/avataricon.png'
+import Cover from '../../Assets/Cover.webp'
 
 const Settings: NextPage = () => {
   const { data: session } = useSession()

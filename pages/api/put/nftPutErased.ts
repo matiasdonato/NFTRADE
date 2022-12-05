@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
 /* this endpoint is for testing purposes */
@@ -28,7 +30,7 @@ export default async function updateNft(
           },
         })
 
-        const newCollection = await prisma.collection.update({
+        await prisma.collection.update({
           where: {
             id: collectionId as string,
           },
@@ -39,14 +41,13 @@ export default async function updateNft(
               },
             },
             price: Math.round(
-              // @ts-ignore
-              oldCollection.price -
+              oldCollection?.price -
                 nft.price * (1 - oldCollection.discount / 100),
             ),
           },
         })
         const msg = {
-          text: 'The NFT was successfully updated.',
+          text: 'Passed. NFT successffully updated.',
           data: nft,
         }
         res.status(205).json(msg)
@@ -60,13 +61,13 @@ export default async function updateNft(
           },
         })
         const msg = {
-          text: 'The NFT was successfully updated.',
+          text: 'Passed. NFT successffully updated.',
           data: nft,
         }
         res.status(205).json(msg)
       }
     }
   } catch (e: any) {
-    console.log(e.message)
+    console.error(e.message)
   }
 }

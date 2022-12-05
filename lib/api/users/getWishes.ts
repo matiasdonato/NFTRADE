@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import prisma from '@lib/db'
 /* this endpoint is for testing purposes */
 
@@ -31,9 +33,7 @@ const getWishes = async ({ id }: { id: string }): Promise<WishesResponse> => {
     })
     return user
   } catch (e) {
-    console.log(e)
-    // @ts-ignore
-    return null
+    console.error(e)
   }
 }
 

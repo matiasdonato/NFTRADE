@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
-
 import Footer from '@components/footer'
 import SvgCoin from '@components/icons/svgCoin'
 import SvgPlus from '@components/icons/svgPlus'
@@ -44,7 +45,6 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
           <div className="flex justify-center w-full">
             <div className="flex min-h-[900px] p-8 border-[1px] border-gray-400 rounded-[15px] w-[93%] flex-wrap">
               {collections.length > 0 &&
-                // @ts-ignore
                 collections.map((el) => (
                   <div
                     key={el.id}
@@ -55,7 +55,6 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
                       <div className="relative">
                         <div className="rounded-xl border-spacing-2 ">
                           <Image
-                            // @ts-ignore
                             src={el.image}
                             height={'1000'}
                             width={'1000'}

@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
 import Footer from '@components/footer'
@@ -43,14 +45,12 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
           <div className="flex justify-center w-full">
             <div className="flex min-h-[900px] p-8 border-[1px] border-gray-400 rounded-[15px] w-[93%] flex-wrap">
               {nfts.length > 0 &&
-                // @ts-ignore
                 nfts.map((el) => (
                   <div
                     key={el.id}
                     className={` mb-2 w-full lg:w-[30%] lg:mr-6 lg:mb-6 max-w-[287px] h-[380px] overflow-hidden relative flex flex-col bg-gray-800 rounded-xl p-[1px] border-slate-900 cursor-pointer group  dark:bg-stone-900 dark:border-[1px]   dark:border-gray-400  group shadow-lg shadow-zinc-500`}
                   >
                     <Link href={`/nfts/${el.id}`} key={el.id}>
-                      {/* // h-[35rem] w-[22rem] */}
                       <div>
                         <div className="rounded-xl border-spacing-2 ">
                           <Image

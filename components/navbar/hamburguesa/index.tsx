@@ -1,4 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import CartSide from '@components/cart'
+import SvgAdmin from '@components/icons/svgAdmin'
 import SvgBell from '@components/icons/svgBell'
 import SvgCart from '@components/icons/svgCart'
 import SvgCoin from '@components/icons/svgCoin'
@@ -93,22 +97,6 @@ const Hamburguesa = () => {
             </>
 
             {session && (
-              <Link href={`/users/${session.user.id}`}>
-                <a>
-                  <li
-                    key={'5'}
-                    className="flex flex-row justify-start items-center gap-4 hover:bg-gray-500 hover:dark:bg-[#3b3d41] rounded-xl py-2 w-full px-6"
-                  >
-                    <span className="pr-6">
-                      <SvgUser width={'28'} height={'28'} />{' '}
-                    </span>
-                    Profile
-                  </li>
-                </a>
-              </Link>
-            )}
-
-            {session && (
               <>
                 <li
                   key={'3'}
@@ -128,7 +116,34 @@ const Hamburguesa = () => {
                 />
               </>
             )}
-
+            {session && (
+              <Link href={`/users/${session.user.id}`}>
+                <a>
+                  <li
+                    key={'5'}
+                    className="flex flex-row justify-start items-center gap-4 hover:bg-gray-500 hover:dark:bg-[#3b3d41] rounded-xl py-2 w-full px-6"
+                  >
+                    <span className="pr-6">
+                      <SvgUser width={'28'} height={'28'} />{' '}
+                    </span>
+                    Profile
+                  </li>
+                </a>
+              </Link>
+            )}
+            <Link href={'/dashboard'}>
+              <a>
+                <li
+                  key={'4'}
+                  className="flex flex-row justify-start items-center gap-4 hover:bg-gray-500 hover:dark:bg-[#3b3d41] rounded-xl py-2 w-full px-6"
+                >
+                  <span className="pr-6">
+                    <SvgAdmin width={'28'} height={'28'} />{' '}
+                  </span>
+                  Dashboard
+                </li>
+              </a>
+            </Link>
             <Link href={'/marketplace'}>
               <a>
                 <li

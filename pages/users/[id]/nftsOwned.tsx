@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react/jsx-no-undef */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import Footer from '@components/footer'
 import SvgCoin from '@components/icons/svgCoin'
 import NavBar from '@components/navbar/navbar'
@@ -33,6 +33,7 @@ const NftsOwned: NextPage<Props> = ({ user }) => {
             height={175}
             className=" bg-white rounded-full object-cover h-[175px] w-[175px]"
             src={account?.image || defaultAvatar}
+            alt={session?.user.name}
           />
         </div>
         <div className="mt-[100px] mb-[60px] items-center flex flex-col w-full ">
@@ -42,7 +43,6 @@ const NftsOwned: NextPage<Props> = ({ user }) => {
           <div className="flex justify-center w-full">
             <div className="flex min-h-[900px] p-8 border-[1px] border-gray-400 rounded-[15px] w-[93%] flex-wrap">
               {nfts.length > 0 &&
-                // @ts-ignore
                 nfts.map((el) => (
                   <div
                     key={el.id}
@@ -50,7 +50,6 @@ const NftsOwned: NextPage<Props> = ({ user }) => {
                   >
                     <Link href={`/nfts/${el.id}`} key={el.id}>
                       <a>
-                        {/* // h-[35rem] w-[22rem] */}
                         <div>
                           <div className="rounded-xl border-spacing-2 ">
                             <Image
