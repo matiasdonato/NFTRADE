@@ -3,10 +3,7 @@
 
 import darkImage from '@assets/logoDark.png'
 import lightImage from '@assets/logoLight.png'
-import SvgFacebook from '@components/icons/svgFacebook'
 import SvgGoogle from '@components/icons/svgGoogle'
-import SvgLinkedIn from '@components/icons/svgLinkedIn'
-import SvgTwitter from '@components/icons/svgTwitter'
 import { useFormik } from 'formik'
 import { login_valid } from 'hook/validate'
 import type { NextPage } from 'next'
@@ -141,25 +138,23 @@ const LogIn: NextPage = () => {
                 </div>
 
                 <button
-                  className="bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#303339] dark:hover:bg-[#393b41] dark:text-white transition-all rounded-full py-2 text-lg w-4/5 hover:scale-105 font-bold uppercase"
+                  className="bg-gray-100 text-gray-600 h-[50px] hover:bg-gray-200 dark:bg-[#303339] dark:hover:bg-[#393b41] dark:text-white transition-all rounded-full py-2 text-lg w-4/5 hover:scale-105 font-bold"
                   type="submit"
                 >
-                  Sign in
+                  Sign In
                 </button>
               </form>
             </div>
-            <div className="flex flex-row justify-evenly items-center w-3/5">
-              {providers?.google && (
-                <button
-                  className="hover:scale-125 transition-transform"
-                  onClick={async () => {
-                    await signIn(providers.google.id)
-                  }}
-                >
-                  <SvgGoogle />
-                </button>
-              )}
-              {providers?.facebook && (
+            <span className="mb-4">Or</span>
+            <div
+              onClick={async () => {
+                await signIn(providers.google.id)
+              }}
+              className="flex flex-row cursor-pointer justify-center items-center h-[50px] bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-[#303339] dark:hover:bg-[#393b41] dark:text-white transition-all rounded-full py-2 text-lg w-4/5 font-bold hover:scale-[1.05] "
+            >
+              <p className="mr-2">Sign in with Google</p>
+              <SvgGoogle className=" w-[34px]  " />
+              {/* {providers?.facebook && (
                 <button
                   className="hover:scale-125 transition-transform"
                   onClick={async () => {
@@ -190,7 +185,7 @@ const LogIn: NextPage = () => {
                 >
                   <SvgLinkedIn />
                 </button>
-              )}
+              )} */}
             </div>
             <p className="text-center text-sm mt-3 text-gray-600 dark:text-gray-400">
               don&apos;t have an account yet?{' '}
