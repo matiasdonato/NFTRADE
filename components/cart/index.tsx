@@ -3,10 +3,11 @@
 
 import SvgCoin from '@components/icons/svgCoin'
 import SvgCross from '@components/icons/svgCross'
+import SvgLoading from '@components/icons/svgLoading'
 import { Dialog, Transition } from '@headlessui/react'
 import useBuyNftPriceCoins from 'hook/useBuyNftPriceCoins'
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 interface CartSideBarProps {
   isOpen: boolean
@@ -16,6 +17,8 @@ interface CartSideBarProps {
 const CartSideBar: React.FC<CartSideBarProps> = ({ isOpen, handleClose }) => {
   const { totalPrice, cart, removeItem, clearCart, handleChange } =
     useBuyNftPriceCoins(handleClose)
+
+  const [loadingBuy, setLoadingBuy] = useState(false)
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -127,10 +130,19 @@ const CartSideBar: React.FC<CartSideBarProps> = ({ isOpen, handleClose }) => {
                             </span>
                           </div>
                           <button
-                            className="bg-white hover:bg-gray-300 text-black dark:text-white dark:bg-[#303339] dark:hover:bg-[#393b41] transition-all text-lg font-semibold w-full h-10 my-5"
-                            onClick={handleChange}
+                            className="bg-white flex justify-center items-center hover:bg-gray-300 text-black dark:text-white dark:bg-[#303339] dark:hover:bg-[#393b41] transition-all text-lg font-semibold w-full h-10 my-5"
+                            onClick={() => {
+                              handleChange()
+                              setLoadingBuy(true)
+                            }}
                           >
-                            Go to checkout
+                            {loadingBuy === false ? (
+                              'Complete Purchase'
+                            ) : (
+                              <div className="animate-spin flex justify-center items-center ml-1 w-[25px] h-[25px] rounded-full">
+                                <SvgLoading className="max-sm:w-5 max-sm:h-5" />
+                              </div>
+                            )}
                           </button>
                         </div>
                       )}

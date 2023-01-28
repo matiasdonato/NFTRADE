@@ -34,7 +34,7 @@ const useBuyNftPriceCoins = (handleClose: any) => {
   const handleChange = async () => {
     if (status === 'unauthenticated') {
       toast.custom((t) => (
-        <div className="flex flex-col justify-center items-center w-96 bg-white rounded-xl py-3 px-8 gap-4 ease duration-500 z-50">
+        <div className="flex flex-col justify-center items-center w-96 bg-slate-900 rounded-xl py-3 px-8 gap-4 ease duration-500 z-50">
           <div className="flex  text-center font-medium">
             You must be logged to buy NFT&apos;s
             <br />
@@ -63,8 +63,6 @@ const useBuyNftPriceCoins = (handleClose: any) => {
         </div>
       ))
     } else if (coins > totalPrice) {
-      clearCart()
-      handleClose(false)
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/cart`,
         {
@@ -72,18 +70,21 @@ const useBuyNftPriceCoins = (handleClose: any) => {
           comprador: session?.user,
         },
       )
+      clearCart()
+      handleClose(false)
 
       if (res.status === 404) {
         toast.error(
           'You do not have sufficient coins to conclude the purchase.',
         )
       } else {
-        toast.success('Purchase made successfully!', { duration: 3000 })
+        toast.success('Purchase made successfully!')
+        setTimeout(router.push('/marketplace'), 1800)
       }
     } else {
       toast.custom(
         (t) => (
-          <div className="flex flex-col justify-center items-center w-96 bg-white rounded-xl py-3 px-8 gap-4 ease duration-500 z-50">
+          <div className="flex flex-col justify-center items-center w-96 bg-slate-900 rounded-xl py-3 px-8 gap-4 ease duration-500 z-50">
             <div className="flex  text-center font-medium">
               You do not have suffucient coins to conclude the purchase. Do you
               want to buy them?

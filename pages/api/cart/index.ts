@@ -125,6 +125,10 @@ export default async function handler(
             datebuy?.createdAt,
             'vendedor',
           )
+          console.log('hola')
+          return res.status(200).json({
+            msg: 'NFT succesfully purchased.',
+          })
         } catch (error) {
           console.error(error)
         }

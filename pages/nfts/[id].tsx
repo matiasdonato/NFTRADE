@@ -17,7 +17,7 @@ import useDetail from 'hook/useDetail'
 import type { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast, Toaster } from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast'
 import type { NftDetailResponse } from 'types/api-responses'
 
 interface NftDetailProps {
