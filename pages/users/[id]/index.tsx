@@ -87,6 +87,8 @@ const UserDetail: NextPage<Props> = ({ user }) => {
     }
   }
 
+  console.log(user)
+
   const [selectPhoto, setSelectPhoto] = useState(false)
   const [changeName, setChangeName] = useState(false)
   const [changeEmail, setChangeEmail] = useState(false)
@@ -365,13 +367,13 @@ const UserDetail: NextPage<Props> = ({ user }) => {
             </div>
           </div>
         </div>
-        <div className="lg:px-[50px] px-[10px] mt-[20px] flex flex-wrap ">
-          <div className=" border-[1px] w-full lg:w-[48%] rounded-[15px] px-[20px] mr-10 mb-4 border-gray-100 dark:border-[#303339]">
+        <div className="lg:px-[50px] px-[10px] mt-[20px] gap-[22px] justify-center flex flex-wrap ">
+          <div className=" border-[1px] w-full lg:w-[48%] rounded-[15px] px-[20px] mb-4 border-[#303339] dark:border-gray-100">
             <h3 className="text-[1.5rem] font-[600] text-gray-900 mt-2 dark:text-gray-300">
               Owned
             </h3>
             <div
-              className={`flex w-full h-[700px] justify-center lg:justify-start my-3 flex-wrap overflow-auto`}
+              className={`flex w-full gap-[22px] max-h-[640px] sm:max-h-fit overflow-hidden sm:min-h-[700px] justify-center my-3 flex-wrap`}
             >
               {user.nftsOwned.length > 0 ? (
                 user.nftsOwned.map((el) => <NftCard key={el.id} nft={el} />)
@@ -393,12 +395,12 @@ const UserDetail: NextPage<Props> = ({ user }) => {
               </a>
             </Link>
           </div>
-          <div className=" border-[1px] w-full lg:w-[48%] rounded-[15px] px-[20px] mb-4 border-gray-100 dark:border-[#303339]">
+          <div className=" border-[1px] w-full lg:w-[48%] rounded-[15px] px-[20px] mb-4 border-[#303339] dark:border-gray-100">
             <h3 className="text-[1.5rem] font-[600] text-gray-900 mt-2 dark:text-gray-300">
               Created
             </h3>
             <div
-              className={`flex w-full h-[700px] justify-center lg:justify-start my-3 flex-wrap overflow-auto`}
+              className={`flex w-full gap-[22px] max-h-[640px] sm:max-h-fit overflow-hidden sm:min-h-[700px] justify-center my-3 flex-wrap`}
             >
               {user.nftsCreated.length > 0
                 ? user.nftsCreated.map((el) => <NftCard key={el.id} nft={el} />)
@@ -442,12 +444,12 @@ const UserDetail: NextPage<Props> = ({ user }) => {
             </Link>
           </div>
         </div>
-        <div className="lg:px-[50px] px-[10px] mt-[20px] flex flex-wrap ">
-          <div className=" lg:mr-8 border-[1px]  border-gray-400 w-full lg:w-[48%] h-[455px] rounded-[15px] px-[20px]  mb-4">
+        <div className="lg:px-[50px] gap-[22px] justify-center px-[10px] mt-[20px] flex flex-wrap ">
+          <div className=" border-[1px]  border-[#303339] dark:border-gray-100 w-full lg:w-[48%] min-h-[455px] rounded-[15px] px-[20px]  mb-4">
             <h3 className="text-[1.5rem] font-[600] text-gray-900 mt-2 dark:text-gray-200">
               Collections Owned
             </h3>
-            <div className="flex w-full my-3 h-[330px] justify-center lg:justify-start  flex-wrap overflow-auto">
+            <div className="flex w-full my-3 min-h-[330px] flex-wrap overflow-auto gap-[22px] justify-center">
               {user.collectionsOwned.length > 0 ? (
                 user.collectionsOwned.map((el) => (
                   <CollectionCard key={el.id} collection={el} />
@@ -459,7 +461,7 @@ const UserDetail: NextPage<Props> = ({ user }) => {
               )}
             </div>
 
-            <Link href={`${user.id}/nftsOwned`}>
+            <Link href={`${user.id}/collectionsOwned`}>
               <button
                 disabled={user.collectionsOwned.length < 1}
                 className=" bg-blue-500 disabled:cursor-default disabled:bg-gray-500 disabled:hover:scale-[1] text-white h-[36px] w-full hover:scale-[1.015] transition-all rounded-[8px] mb-5 "
@@ -468,11 +470,11 @@ const UserDetail: NextPage<Props> = ({ user }) => {
               </button>
             </Link>
           </div>
-          <div className=" border-[1px] border-gray-400 w-full lg:w-[48%] h-[455px] rounded-[15px] px-[20px]  mb-4">
+          <div className=" border-[1px] border-[#303339] dark:border-gray-100 w-full lg:w-[48%] min-h-[455px] rounded-[15px] px-[20px]  mb-4">
             <h3 className="text-[1.5rem] font-[600] text-gray-900 mt-2 dark:text-gray-200">
               Collections Created
             </h3>
-            <div className="flex w-full my-3 h-[330px] justify-center lg:justify-start  flex-wrap overflow-auto">
+            <div className="flex w-full my-3 gap-[22px] min-h-[330px] justify-center flex-wrap overflow-auto">
               {user.collectionsOwned.length > 0
                 ? user.collectionsOwned.map((el) => (
                     <CollectionCard key={el.id} collection={el} />
@@ -516,8 +518,8 @@ const UserDetail: NextPage<Props> = ({ user }) => {
             </Link>
           </div>
         </div>
-        <div className="lg:px-[50px] px-[10px] flex flex-wrap mt-[20px] justify-center">
-          <div className=" border-[1px] justify-center lg:justify-start border-gray-400 w-full lg:w-[48%] min-h-[455px] rounded-[15px] px-[20px]  mb-4">
+        <div className="lg:px-[50px] px-[10px] flex flex-wrap mt-[20px] justify-center w-full ">
+          <div className=" border-[1px] justify-center lg:justify-start border-[#303339] dark:border-gray-100 w-full lg:w-[48%] min-h-[455px] rounded-[15px] px-[20px]  mb-4">
             <h3 className="text-[1.5rem] font-[600] text-gray-900 mt-2 dark:text-gray-200">
               Wishlist
             </h3>

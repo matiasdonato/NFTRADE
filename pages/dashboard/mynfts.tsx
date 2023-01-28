@@ -15,6 +15,7 @@ import useSWR, { mutate } from 'swr'
 const MyNFTS: NextPage = () => {
   const { data: session } = useSession()
   const { data } = useSWR(`/api/user/${session?.user.id}`, fetcher)
+  console.log(data)
 
   return (
     <section className="dashboard__home flex bg-gray-200 dark:bg-[#202225] transition-all">
@@ -35,6 +36,7 @@ const MyNFTS: NextPage = () => {
                     nft={e}
                     id={e.id}
                     image={e.image}
+                    collectionId={e.collectionId}
                     name={e.name}
                     published={e.published}
                     price={e.price}

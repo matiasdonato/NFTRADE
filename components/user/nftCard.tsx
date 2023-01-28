@@ -17,7 +17,7 @@ const NftCard = ({ nft }: Props) => {
   return (
     <div
       key={nft.id}
-      className={`w-[30%] mr-6 mb-6 max-w-[277px] min-w-[194px] h-[300px] overflow-hidden relative flex flex-col h- bg-white dark:bg-[#303339] rounded-xl p-[1px] cursor-pointer group`}
+      className={`w-[30%] max-w-[277px] min-w-[194px] h-[300px] overflow-hidden relative flex flex-col h- bg-white dark:bg-[#303339] rounded-xl p-[1px] cursor-pointer group`}
     >
       <Link href={`/nfts/${nft.id}`} key={nft.id}>
         <div>

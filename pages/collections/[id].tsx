@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-
 import Footer from '@components/footer'
 import SvgCoin from '@components/icons/svgCoin'
 import SvgLoading from '@components/icons/svgLoading'
@@ -8,13 +7,13 @@ import SvgTrash from '@components/icons/svgTrash'
 import NavBar from '@components/navbar/navbar'
 import { useCart } from '@context/cart'
 import getCollectionById from '@lib/api/collections/getCollectionById'
+import axios from 'axios'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
 import { RiVipCrownFill } from 'react-icons/ri'
 import type { CollectionDetailResponse } from 'types/api-responses'
 
@@ -27,6 +26,8 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
   const { cart, addItem } = useCart()
   const router = useRouter()
   const [admin, setAdmin] = useState(false)
+  const [coins, setCoins] = useState(null)
+  let loadingBuy = false
 
   useEffect(() => {
     async function getAdmin() {
@@ -39,8 +40,32 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
         .then((r) => r.json())
         .then((r) => setAdmin(r))
     }
+
+    let id
+
+    if (session) {
+      id = session.user.id
+    }
+
+    async function getCoins() {
+      id
+        ? await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user/${id}`)
+            .then((res) => res.json())
+            .then((res) => {
+              setCoins(res.coins)
+            })
+        : setCoins(undefined)
+      console.log('hola')
+    }
     getAdmin()
-  })
+    setTimeout(getCoins, 5000)
+  }, [session])
+
+  if (coins === null) {
+    loadingBuy = true
+  } else {
+    loadingBuy = false
+  }
 
   const [loadingPublished, setLoadingPublished] = useState(false)
 
@@ -91,6 +116,31 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
     })
     setDeleteLoading(false)
     router.push(`/`)
+  }
+
+  async function handleBuy() {
+    setLoadingPublished(true)
+    if (coins === undefined) {
+      console.log('no logeado')
+    } else if (coins < collection.price) {
+      console.log('no hay plata')
+    } else {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/collections/buy`,
+        {
+          collection: collection,
+          nfts: collection.nfts,
+          comprador: session?.user,
+        },
+      )
+      console.log(res)
+      if (res.status === 200) {
+        console.log('comprado')
+        router.push(`/users/${session?.user.id}/collectionsOwned`)
+      } else {
+        console.log('error')
+      }
+    }
   }
 
   return (
@@ -193,7 +243,7 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
                     )}
                   </div>
                 </div>
-                <div className="buttons flex justify-center items-center mt-[53px] mb-[43px] max-w-[590px]">
+                <div className="buttons flex justify-center items-center mt-[53px] mb-[43px] max-w-[690px]">
                   {collection.owner.id === session?.user.id ? (
                     loadingPublished ? (
                       <div className="animate-spin flex justify-center items-center w-full h-[82px] mt-2 rounded-full">
@@ -224,35 +274,29 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
                         This product is not for sale at this time
                       </p>
                     </div>
+                  ) : loadingPublished === true ? (
+                    <div className="animate-spin flex justify-center items-center w-full h-[82px] mt-2 rounded-full">
+                      <SvgLoading className="w-[40px] h-[40px] " />
+                    </div>
                   ) : (
-                    <div className="flex items-center py-6 w-full ">
-                      <button
-                        className="text-xl bg-white hover:bg-gray-300 text-gray-600 dark:text-gray-400 dark:bg-[#303339] dark:hover:bg-[#393b41] hover:drop-shadow-lg transition-all w-[100%] min-h-[90px] py-3 px-20 rounded-xl"
-                        onClick={() => {
-                          addItem(collection)
-                          cart.find((e) => e.name === collection.name)
-                            ? toast.error(
-                                'You have already added this NFT to the cart!',
-                              )
-                            : toast.success('NFT added to the cart!')
-                        }}
-                      >
-                        Add to cart
-                      </button>
+                    <div className="text-xl flex justify-center items-center w-full min-h-[90px] h-[90px] text-white bg-blue-600 hover:bg-blue-500 hover:drop-shadow-lg transition-all mx-2 rounded-xl">
+                      {loadingBuy === false ? (
+                        <button
+                          onClick={handleBuy}
+                          className=" w-full h-full rounded-xl "
+                        >
+                          Buy Collection
+                        </button>
+                      ) : (
+                        <div className="animate-spin flex justify-center items-center ml-1 w-[25px] h-[25px] rounded-full">
+                          <SvgLoading className="max-sm:w-5 max-sm:h-5" />
+                        </div>
+                      )}
                     </div>
                   )}
-                  {session?.user.id !== collection.owner.id &&
-                    published === true && (
-                      <Link href={'#'}>
-                        <button className="text-xl w-[50%] min-h-[90px] text-white bg-blue-600 hover:bg-blue-500 hover:drop-shadow-lg transition-all py-3 px-20 mx-2 rounded-xl">
-                          Buy now
-                        </button>
-                      </Link>
-                    )}
-
                   {/* //dev */}
                 </div>
-                <article className="abajo mt-6 w-full sm:w-full min-h-[285px] lg:mt-0 rounded-t-xl border-2 border-gray-100 dark:border-[#303339]">
+                <article className="abajo mt-6 w-full sm:w-full min-h-[285px] lg:mt-0 rounded-t-xl border-2 border-gray-100 dark:border-[#303339] max-w-[690px]">
                   <header className="flex justify-between items-center text-xl font-semibold px-5 w-full h-[50px] rounded-t-md bg-gray-100 text-gray-600 dark:bg-[#303339] dark:text-gray-400">
                     Description
                   </header>

@@ -13,6 +13,7 @@ export declare class ApiErrorResponse extends Error {
 export type NftsResponse = Prisma.NftGetPayload<{
   select: {
     id: true
+    collectionId: true
     name: true
     image: true
     price: true
@@ -42,6 +43,7 @@ export type NftsResponse = Prisma.NftGetPayload<{
 export type NftResponse = Prisma.NftGetPayload<{
   select: {
     id: true
+    collectionId: true
     name: true
     image: true
     price: true

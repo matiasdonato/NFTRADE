@@ -8,7 +8,7 @@ import Footer from '@components/footer'
 import SvgCoin from '@components/icons/svgCoin'
 import SvgPlus from '@components/icons/svgPlus'
 import NavBar from '@components/navbar/navbar'
-import getCollectionsCreated from '@lib/api/users/getCollectionsCreated'
+import getCollectionsOwned from '@lib/api/users/getCollectionsOwned'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -23,6 +23,7 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
   const { data: session } = useSession()
 
   const collections = user.collectionsOwned
+  console.log(collections)
 
   return (
     <div>
@@ -119,7 +120,7 @@ const NftsCreated: NextPage<Props> = ({ user }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const data = await getCollectionsCreated({ id: params?.id as string })
+  const data = await getCollectionsOwned({ id: params?.id as string })
   if (!data) {
     return {
       notFound: true,

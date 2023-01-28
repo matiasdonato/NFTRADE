@@ -2,12 +2,11 @@
 // @ts-nocheck
 
 import CartSide from '@components/cart'
-import SvgAdmin from '@components/icons/svgAdmin'
 import SvgBell from '@components/icons/svgBell'
 import SvgCart from '@components/icons/svgCart'
 import SvgCoin from '@components/icons/svgCoin'
-import SvgLogin from '@components/icons/svgLogin'
 import SvgLogOut from '@components/icons/svgLogOut'
+import SvgLogin from '@components/icons/svgLogin'
 import SvgMarket from '@components/icons/svgMarket'
 import SvgUser from '@components/icons/svgUser'
 import { useCart } from '@context/cart'
@@ -33,7 +32,7 @@ const Hamburguesa = () => {
   return (
     <>
       <div
-        className="flex flex-col gap-[0.4rem] relative"
+        className="flex flex-col gap-[0.4rem] relative "
         onClick={() => setHamburguer((state) => !state)}
       >
         <span
@@ -58,7 +57,7 @@ const Hamburguesa = () => {
         <div
           className={`${
             hamburguer ? 'opacity-100' : 'hidden translate-x-96 opacity-0'
-          } fixed flex flex-col justify-between top-[5rem] left-0 w-full h-screen ease duration-75 bg-gray-700 dark:bg-[#303339]`}
+          }  z-10 fixed flex flex-col justify-between top-[5rem] left-0 w-full h-screen ease duration-75 bg-gray-700 dark:bg-[#303339]`}
         >
           <ul className="text-gray-300 text-2xl w-full flex flex-col items-start px-4 my-5 gap-2 overflow-auto max-h-[62%]">
             {session && (
@@ -131,19 +130,6 @@ const Hamburguesa = () => {
                 </a>
               </Link>
             )}
-            <Link href={'/dashboard'}>
-              <a>
-                <li
-                  key={'4'}
-                  className="flex flex-row justify-start items-center gap-4 hover:bg-gray-500 hover:dark:bg-[#3b3d41] rounded-xl py-2 w-full px-6"
-                >
-                  <span className="pr-6">
-                    <SvgAdmin width={'28'} height={'28'} />{' '}
-                  </span>
-                  Dashboard
-                </li>
-              </a>
-            </Link>
             <Link href={'/marketplace'}>
               <a>
                 <li

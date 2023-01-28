@@ -22,7 +22,7 @@ const CollectionCard = ({ collection }: Props) => {
   return (
     <div
       key={collection.id}
-      className={`w-[30%] mr-6 mb-6 max-w-[277px] min-w-[194px] h-[300px] overflow-hidden relative flex flex-col bg-slate-900 dark:bg-stone-900 border-[16px] rounded-xl p-[1px] border-slate-900 dark:border-stone-900 cursor-pointer group shadow-lg shadow-zinc-500`}
+      className={`w-[30%] max-w-[277px] min-w-[194px] h-[300px] overflow-hidden relative flex flex-col bg-slate-900 dark:bg-stone-900 border-[16px] rounded-xl p-[1px] border-slate-900 dark:border-stone-900 cursor-pointer group shadow-lg shadow-zinc-500`}
     >
       <Link href={`/collections/${collection.id}`} key={collection.id}>
         {/* // h-[35rem] w-[22rem] */}

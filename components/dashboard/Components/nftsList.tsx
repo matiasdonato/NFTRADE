@@ -27,6 +27,8 @@ const Nfts = ({ id, image, name, views, likes, nft, mutate, collectionId }) => {
       mutate(`/api/user/${session?.user.id}`)
   }
 
+  console.log(collectionId)
+
   return (
     <>
       <div

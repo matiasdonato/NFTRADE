@@ -22,6 +22,7 @@ const Marketplace: NextPage<HomeProps> = () => {
 
   const { nfts, isLoading } = useNfts(order, filter)
   const [carSize, setCardSize] = useState('bigger')
+  console.log(nfts)
 
   return (
     <div className="bg-gray-200 dark:bg-[#202225]">
@@ -35,6 +36,7 @@ const Marketplace: NextPage<HomeProps> = () => {
         setFilter={setFilter}
         setCardSize={setCardSize}
       />
+
       <section className="market_list relative sm:top-48 top-32">
         <div className="market_list-container flex flex-wrap justify-center w-auto rounded-lg py-6 mb-48 gap-4 min-h-screen">
           {isLoading ? (
@@ -44,6 +46,7 @@ const Marketplace: NextPage<HomeProps> = () => {
             nfts.map((el) => {
               return (
                 <Card
+                  collectionId={el.collectionId}
                   nft={el}
                   key={el.id}
                   id={el.id}

@@ -26,6 +26,7 @@ export default async function handler(
     where,
     select: {
       id: true,
+      collectionId: true,
       name: true,
       image: true,
       price: true,

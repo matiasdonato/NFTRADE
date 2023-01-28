@@ -8,12 +8,14 @@ import styles from '@styles/form.module.css'
 import useLiked from 'hook/useLike'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast, Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { Toaster } from 'react-hot-toast'
 import { RiVipCrownFill } from 'react-icons/ri'
 
 const Card = ({
   nft,
   id,
+  collectionId,
   carSize,
   name,
   description,
@@ -24,6 +26,8 @@ const Card = ({
 }) => {
   const { cart, addItem } = useCart()
   const { session, likedCount, likeHandler } = useLiked(likedBy)
+
+  const router = useRouter()
 
   return (
     <>
@@ -133,17 +137,26 @@ const Card = ({
             </div>
           </a>
         </Link>
-        <button
-          className={`translate-y-10 group-hover:translate-y-0 transition-all absolute bg-blue-600 w-full rounded-b-xl text-center py-2 z-[3] font-semibold text-1xl left-0 bottom-0`}
-          onClick={() => {
-            addItem(nft)
-            cart.find((e) => e.name === nft.name)
-              ? toast.error('You have already added this NFT to the cart!')
-              : toast.success('NFT added to the cart!')
-          }}
-        >
-          Add to cart
-        </button>
+        {collectionId === null ? (
+          <button
+            className={`translate-y-10 group-hover:translate-y-0 transition-all absolute bg-blue-600 w-full rounded-b-xl text-center py-2 z-[3] font-semibold text-1xl left-0 bottom-0`}
+            onClick={() => {
+              addItem(nft)
+              cart.find((e) => e.name === nft.name)
+                ? toast.error('You have already added this NFT to the cart!')
+                : toast.success('NFT added to the cart!')
+            }}
+          >
+            Add to cart
+          </button>
+        ) : (
+          <button
+            onClick={() => router.push(`/collections/${collectionId}`)}
+            className={`translate-y-10 group-hover:translate-y-0 transition-all absolute bg-zinc-800 w-full rounded-b-xl text-center py-2 z-[3] font-semibold text-1xl left-0 bottom-0`}
+          >
+            Go to collection
+          </button>
+        )}
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </>

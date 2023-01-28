@@ -79,7 +79,7 @@ const useBuyNftPriceCoins = (handleClose: any) => {
         )
       } else {
         toast.success('Purchase made successfully!')
-        setTimeout(router.push('/marketplace'), 1800)
+        setTimeout(router.push(`/users/${session?.user.id}/nftsOwned`), 1800)
       }
     } else {
       toast.custom(
