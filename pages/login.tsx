@@ -17,7 +17,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { toast, Toaster } from 'react-hot-toast'
+import { Toaster, toast } from 'react-hot-toast'
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi'
 import useInfoProviders from '../hook/providers'
 import styles from '../styles/form.module.css'
@@ -39,6 +39,8 @@ const LogIn: NextPage = () => {
     validate: login_valid,
     onSubmit,
   })
+
+  console.log(session)
 
   async function onSubmit(values: { email: string; password: string }) {
     try {
