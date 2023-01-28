@@ -163,7 +163,7 @@ const LogIn: NextPage = () => {
                 <button
                   className="hover:scale-125 transition-transform"
                   onClick={async () => {
-                    await signIn(providers.facebook.id)
+                    console.log(signIn(providers.facebook.id))
                   }}
                 >
                   <SvgFacebook />
