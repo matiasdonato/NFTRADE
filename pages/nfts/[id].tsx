@@ -17,6 +17,8 @@ import useDetail from 'hook/useDetail'
 import type { GetServerSideProps, NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import type { NftDetailResponse } from 'types/api-responses'
 
@@ -26,7 +28,6 @@ interface NftDetailProps {
 
 const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
   const { cart, addItem } = useCart()
-
   const {
     session,
     subState,
@@ -37,10 +38,166 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
     putPrice,
   } = useDetail(nft, true)
 
+  const [coins, setCoins] = useState(null)
+  const [loadingModalBuy, setLoadingModalBuy] = useState(false)
+  const loadingBuy = false
+  const router = useRouter()
+
+  useEffect(() => {
+    let id
+    if (session) {
+      id = session.user.id
+    }
+    async function getCoins() {
+      id
+        ? await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user/${id}`)
+            .then((res) => res.json())
+            .then((res) => {
+              setCoins(res.coins)
+            })
+        : setCoins(undefined)
+      console.log('hola')
+    }
+    setTimeout(getCoins, 3000)
+  }, [session])
+
+  const [buyModal, setBuyModal] = useState(false)
+  const [logModal, setLogModal] = useState(false)
+  const [noCoins, setNoCoins] = useState(false)
+
+  if (coins === null) {
+    loadingBuy = true
+  } else {
+    loadingBuy = false
+  }
+
+  function buyFilter() {
+    setSubState((state) => ({ ...state, loadingPublished: true }))
+    if (session === undefined) {
+      setLogModal(true)
+      setSubState((state) => ({ ...state, loadingPublished: false }))
+    } else if (coins < nft.price) {
+      setNoCoins(true)
+      setSubState((state) => ({ ...state, loadingPublished: false }))
+    } else {
+      setBuyModal(true)
+    }
+  }
+
+  async function handleBuy() {
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/cart`,
+      {
+        nfts: [nft],
+        comprador: session?.user,
+      },
+    )
+    console.log(res)
+    if (res.status === 200) {
+      console.log('comprado')
+      router.push(`/users/${session?.user.id}/nftsOwned`)
+    } else {
+      console.log('error')
+    }
+  }
+
   return (
     <div className="bg-gray-200 dark:bg-[#202225] flex flex-col items-center justify-around w-full min-h-screen transition-all">
       <NavBar />
-      <div className="flex flex-col justify-center items-center mt-[120px] mx-20">
+      <div
+        className={`${
+          buyModal === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          Are you sure you want to buy <b> {nft.name} </b> for{' '}
+          <b>{nft.price}</b> coins?
+        </p>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          {loadingModalBuy === true ? (
+            <div className="text-gray-900 flex cursor-pointer lg:text-[1.2rem] lg:w-[100px] justify-center items-center  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500">
+              <div className="animate-spin flex cursor-pointer justify-center items-center ml-1 w-[25px] h-[25px] rounded-full">
+                <SvgLoading className="max-sm:w-5 max-sm:h-5" />
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={async () => {
+                setLoadingModalBuy(true)
+                await handleBuy()
+                setBuyModal(false)
+              }}
+              className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500"
+            >
+              Buy
+            </button>
+          )}
+
+          <button
+            onClick={() => {
+              setBuyModal(false)
+              setSubState((state) => ({ ...state, loadingPublished: false }))
+            }}
+            className="text-gray-900  lg:text-[1.2rem] lg:w-[100px] dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-red-600 hover:bg-red-500"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div
+        className={`${
+          logModal === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          You have to be logged to buy nft&apos;s
+        </p>
+        <button
+          onClick={() => setLogModal(false)}
+          className=" absolute top-[15px] w-[35px] h-[35px] rounded-[100px] border-gray-700 dark:border-gray-100 border-[1px] hover:scale-[1.1] transition-all shadow-black shadow-sm right-[15px]"
+        >
+          X
+        </button>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          <Link href={'/login'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500">
+              Log in
+            </button>
+          </Link>
+          <Link href={'/register'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px] dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-red-600 hover:bg-red-500">
+              Register
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div
+        className={`${
+          noCoins === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          You do not have enough coins
+        </p>
+        <button
+          onClick={() => setNoCoins(false)}
+          className=" absolute top-[15px] w-[35px] h-[35px] rounded-[100px] border-gray-700 dark:border-gray-100 border-[1px] hover:scale-[1.1] transition-all shadow-black shadow-sm right-[15px]"
+        >
+          X
+        </button>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          <Link href={'/buy'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500">
+              Buy Coins
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div
+        className={`flex flex-col justify-center items-center mt-[120px] mx-20 ${
+          buyModal === true && 'blur-[8px] opacity-80 '
+        } `}
+      >
         <div
           className={`${
             subState.deleteWarning === true
@@ -225,7 +382,7 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
                   )}
                 </div>
               </div>
-              <div className="buttons flex justify-center mb-2 items-center">
+              <div className="buttons flex justify-center mb-2 items-center w-[280px] lg:w-auto ">
                 {nft?.owner.id === session?.user?.id ? (
                   subState.loadingPublished ? (
                     <div className="animate-spin flex justify-center items-center w-full h-[82px] mt-2 rounded-full">
@@ -275,7 +432,7 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
                 ) : (
                   <div className="flex items-center py-6 w-full ">
                     <button
-                      className="w-full text-xl bg-white hover:bg-gray-300 text-gray-600 dark:text-gray-400 dark:bg-[#303339] dark:hover:bg-[#393b41] hover:drop-shadow-lg transition-all py-4 rounded-xl mr-2 max-sm:py-3 max-sm:text-lg"
+                      className="w-full text-xl min-h-[60px] h-[60px] bg-white hover:bg-gray-300 text-gray-600 dark:text-gray-400 dark:bg-[#303339] dark:hover:bg-[#393b41] hover:drop-shadow-lg transition-all py-4 rounded-xl mr-2 max-sm:py-3 max-sm:text-lg"
                       onClick={() => {
                         addItem(nft)
                         cart.find((e) => e.name === nft?.name)
@@ -292,11 +449,20 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
 
                 {session?.user.id !== nft?.owner.id &&
                   subState.published === true && (
-                    <Link href={'#'}>
-                      <button className="w-full text-xl bg-blue-600 hover:bg-blue-700 text-white dark:text-white dark:bg-blue-600 dark:hover:bg-blue-700 hover:drop-shadow-lg transition-all py-4 rounded-xl mr-2 max-sm:py-3 max-sm:text-lg">
-                        Buy now
-                      </button>
-                    </Link>
+                    <div className="text-xl flex justify-center items-center w-full min-h-[60px] h-[60px] text-white bg-blue-600 hover:bg-blue-500 hover:drop-shadow-lg transition-all mx-2 rounded-xl">
+                      {loadingBuy === false ? (
+                        <button
+                          onClick={() => buyFilter()}
+                          className=" w-full h-full rounded-xl "
+                        >
+                          Buy Now
+                        </button>
+                      ) : (
+                        <div className="animate-spin flex justify-center items-center ml-1 w-[25px] h-[25px] rounded-full">
+                          <SvgLoading className="max-sm:w-5 max-sm:h-5" />
+                        </div>
+                      )}
+                    </div>
                   )}
               </div>
               <article className="abajo w-full min-h-[285px] rounded-t-xl border-2 border-gray-100 dark:border-[#303339]">

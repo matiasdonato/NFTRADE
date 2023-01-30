@@ -27,6 +27,9 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
   const router = useRouter()
   const [admin, setAdmin] = useState(false)
   const [coins, setCoins] = useState(null)
+  const [buyModal, setBuyModal] = useState(false)
+  const [logModal, setLogModal] = useState(false)
+  const [noCoins, setNoCoins] = useState(false)
   let loadingBuy = false
 
   useEffect(() => {
@@ -118,35 +121,125 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
     router.push(`/`)
   }
 
-  async function handleBuy() {
+  function buyFilter() {
     setLoadingPublished(true)
-    if (coins === undefined) {
-      console.log('no logeado')
+    if (session === undefined) {
+      setLogModal(true)
+      setLoadingPublished(false)
     } else if (coins < collection.price) {
-      console.log('no hay plata')
+      setNoCoins(true)
+      setLoadingPublished(false)
     } else {
-      const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/collections/buy`,
-        {
-          collection: collection,
-          nfts: collection.nfts,
-          comprador: session?.user,
-        },
-      )
-      console.log(res)
-      if (res.status === 200) {
-        console.log('comprado')
-        router.push(`/users/${session?.user.id}/collectionsOwned`)
-      } else {
-        console.log('error')
-      }
+      setBuyModal(true)
+    }
+  }
+
+  async function handleBuy() {
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/collections/buy`,
+      {
+        collection: collection,
+        nfts: collection.nfts,
+        comprador: session?.user,
+      },
+    )
+    console.log(res)
+    if (res.status === 200) {
+      console.log('comprado')
+      router.push(`/users/${session?.user.id}/collectionsOwned`)
+    } else {
+      console.log('error')
     }
   }
 
   return (
     <div className="bg-gray-200 dark:bg-[#202225] flex flex-col items-center justify-around w-full min-h-screen transition-all">
       <NavBar />
-      <div className=" mt-[120px] w-full">
+      <div
+        className={`${
+          buyModal === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          Are you sure you want to buy <b> {collection.name} </b> for{' '}
+          <b>{collection.price}</b> coins?
+        </p>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          <button
+            onClick={() => {
+              setBuyModal(false)
+              handleBuy()
+            }}
+            className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500"
+          >
+            Buy
+          </button>
+          <button
+            onClick={() => {
+              setBuyModal(false)
+              setLoadingPublished(false)
+            }}
+            className="text-gray-900  lg:text-[1.2rem] lg:w-[100px] dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-red-600 hover:bg-red-500"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div
+        className={`${
+          logModal === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          You have to be logged to buy collections
+        </p>
+        <button
+          onClick={() => setLogModal(false)}
+          className=" absolute top-[15px] w-[35px] h-[35px] rounded-[100px] border-gray-700 dark:border-gray-100 border-[1px] hover:scale-[1.1] transition-all shadow-black shadow-sm right-[15px]"
+        >
+          X
+        </button>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          <Link href={'/login'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500">
+              Log in
+            </button>
+          </Link>
+          <Link href={'/register'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px] dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-red-600 hover:bg-red-500">
+              Register
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div
+        className={`${
+          noCoins === true ? 'flex' : 'hidden'
+        } flex-col items-center justify-evenly w-[320px] p-[15px] h-[200px] lg:w-[600px] lg:h-[300px] fixed z-[1] top-[50%] translate-y-[-50%] bg-zinc-100 rounded-[6px] shadow-lg border-[2px] dark:bg-zinc-900 dark:border-zinc-800 border-zinc-200 shadow-black`}
+      >
+        <p className="text-gray-600 dark:text-gray-100 w-[260px] lg:w-auto lg:text-[1.2rem] text-center font-[500]">
+          You do not have enough coins
+        </p>
+        <button
+          onClick={() => setNoCoins(false)}
+          className=" absolute top-[15px] w-[35px] h-[35px] rounded-[100px] border-gray-700 dark:border-gray-100 border-[1px] hover:scale-[1.1] transition-all shadow-black shadow-sm right-[15px]"
+        >
+          X
+        </button>
+        <div className="flex justify-evenly w-[200px] lg:w-[60%]">
+          <Link href={'/buy'}>
+            <button className="text-gray-900  lg:text-[1.2rem] lg:w-[100px]  dark:text-gray-100 font-[500] h-[38px] w-[80px] rounded-[8px] bg-blue-600 hover:bg-blue-500">
+              Buy Coins
+            </button>
+          </Link>
+        </div>
+      </div>
+      <div
+        className={`mt-[120px] w-full transition-all ${
+          (buyModal === true || logModal === true || noCoins === true) &&
+          'blur-[8px] opacity-80 '
+        } `}
+      >
         <div className="w-full flex flex-col justify-center items-center">
           <div
             className={`${
@@ -282,7 +375,7 @@ const CollectionDetail: NextPage<Props> = ({ collection }) => {
                     <div className="text-xl flex justify-center items-center w-full min-h-[90px] h-[90px] text-white bg-blue-600 hover:bg-blue-500 hover:drop-shadow-lg transition-all mx-2 rounded-xl">
                       {loadingBuy === false ? (
                         <button
-                          onClick={handleBuy}
+                          onClick={() => buyFilter()}
                           className=" w-full h-full rounded-xl "
                         >
                           Buy Collection
