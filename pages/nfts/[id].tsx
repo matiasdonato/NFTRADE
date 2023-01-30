@@ -56,10 +56,11 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
               setCoins(res.coins)
             })
         : setCoins(undefined)
-      console.log('hola')
     }
     setTimeout(getCoins, 3000)
   }, [session])
+  console.log(coins)
+  console.log(session)
 
   const [buyModal, setBuyModal] = useState(false)
   const [logModal, setLogModal] = useState(false)
@@ -73,10 +74,10 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
 
   function buyFilter() {
     setSubState((state) => ({ ...state, loadingPublished: true }))
-    if (session === undefined) {
+    if (session === undefined || session === null) {
       setLogModal(true)
       setSubState((state) => ({ ...state, loadingPublished: false }))
-    } else if (coins < nft.price) {
+    } else if (coins < nft.price || coins === null) {
       setNoCoins(true)
       setSubState((state) => ({ ...state, loadingPublished: false }))
     } else {
