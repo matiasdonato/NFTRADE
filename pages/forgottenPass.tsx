@@ -7,16 +7,20 @@ import axios from 'axios'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 const ForgottenPass: NextPage = () => {
   const [email, setEmail] = useState('')
+
+  const router = useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     await axios.put(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/resetpass`, {
       email: email,
     })
+    router.push('/login'), 3000
   }
 
   return (

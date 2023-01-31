@@ -126,9 +126,6 @@ export default async function handler(
             datebuy?.createdAt,
             'vendedor',
           )
-
-          console.log('sexoo')
-
           return res.status(200).json({
             msg: 'NFT succesfully purchased.',
           })
