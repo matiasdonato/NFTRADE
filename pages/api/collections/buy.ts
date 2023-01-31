@@ -2,6 +2,7 @@
 // @ts-nocheck
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import emailCollection from '../emails/collectionBuy'
 /* this endpoint is for testing purposes */
@@ -9,6 +10,7 @@ export default async function buyCollection(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  console.log('holaholachauchau')
   const { collection, nfts, comprador } = req.body
   try {
     const comp = await prisma.user.findUnique({

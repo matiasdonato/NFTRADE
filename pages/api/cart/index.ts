@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import prisma from '@lib/db'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import emailNft from '../emails/nftBuy'
 

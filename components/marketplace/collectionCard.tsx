@@ -6,7 +6,7 @@ import { useCart } from '@context/cart'
 import styles from '@styles/form.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toast, Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { RiVipCrownFill } from 'react-icons/ri'
 
 const CollectionCard = ({
@@ -102,17 +102,6 @@ const CollectionCard = ({
             </div>
           </a>
         </Link>
-        <button
-          className={`translate-y-10 group-hover:translate-y-0 transition-all absolute bg-blue-600 w-full rounded-b-xl text-center py-2 z-[3] font-semibold text-1xl left-0 bottom-0`}
-          onClick={() => {
-            addItem(nft)
-            cart.find((e) => e.name === nft.name)
-              ? toast.error('You have already added this NFT to the cart!')
-              : toast.success('NFT added to the cart!')
-          }}
-        >
-          Add to cart
-        </button>
       </div>
       <Toaster position="top-center" reverseOrder={false} />
     </>
