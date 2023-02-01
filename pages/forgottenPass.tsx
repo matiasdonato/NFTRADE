@@ -20,6 +20,7 @@ const ForgottenPass: NextPage = () => {
     await axios.put(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/resetpass`, {
       email: email,
     })
+    axios.get(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/resetpass`)
     router.push('/login'), 3000
   }
 
