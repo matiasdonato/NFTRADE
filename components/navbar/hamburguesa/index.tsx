@@ -13,6 +13,7 @@ import { useCart } from '@context/cart'
 import fetcher from '@lib/fetcher'
 import useCoins from 'hook/useCoins'
 import { signOut } from 'next-auth/react'
+import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useState } from 'react'
 import { VscSignIn } from 'react-icons/vsc'
@@ -28,6 +29,7 @@ const Hamburguesa = () => {
   const [openNotify, setOpenNotify] = useState(false)
   const URL = `/api/notificaciones?user=${session?.user.id}`
   const { data } = useSWR(URL, fetcher, { refreshInterval: 1000 })
+  const { theme, setTheme } = useTheme()
 
   return (
     <>
@@ -80,6 +82,7 @@ const Hamburguesa = () => {
                 </a>
               </Link>
             )}
+
             <>
               <li
                 key={'2'}
@@ -156,6 +159,12 @@ const Hamburguesa = () => {
                 </li>
               </a>
             </Link>
+            <li
+              className="block py-2 px-4 hover:bg-gray-600 dark:hover:bg-[#393b41] font-bold hover:text-white cursor-pointer"
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            >
+              Toggle to {theme === 'light' ? 'dark' : 'light'} mode
+            </li>
           </ul>
           <ul className="absolute text-gray-300 bottom-24 text-2xl w-full flex flex-col items-start px-4">
             {!session && (
