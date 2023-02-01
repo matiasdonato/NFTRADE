@@ -96,11 +96,14 @@ const SignIn: NextPage = () => {
   const [code] = useState(Math.floor(Math.random() * 1000000))
 
   async function sendVerificationCode() {
-    const res = await axios.post('/api/auth/verification', {
-      mail: formik.values.email,
-      code,
-      name: formik.values.username,
-    })
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/verification`,
+      {
+        mail: formik.values.email,
+        code,
+        name: formik.values.username,
+      },
+    )
     if (res.status === 200) {
       console.log('email send')
     }
