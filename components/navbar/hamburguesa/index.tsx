@@ -31,6 +31,8 @@ const Hamburguesa = () => {
   const { data } = useSWR(URL, fetcher, { refreshInterval: 1000 })
   const { theme, setTheme } = useTheme()
 
+  console.log(theme)
+
   return (
     <>
       <div
