@@ -6,14 +6,12 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const { mail, code, name } = req.body
-  if (req.method === 'POST') {
-    try {
-      emailVerification(req, res, mail, code, name)
-      return res.status(200).json({
-        msg: 'email sended',
-      })
-    } catch (err) {
-      console.log(err)
-    }
+  try {
+    emailVerification(req, res, mail, code, name)
+    return res.status(200).json({
+      msg: 'email sended',
+    })
+  } catch (err) {
+    console.log(err)
   }
 }
