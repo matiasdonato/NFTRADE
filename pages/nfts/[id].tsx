@@ -449,7 +449,8 @@ const NftDetail: NextPage<NftDetailProps> = ({ nft }) => {
                 )}
 
                 {session?.user.id !== nft?.owner.id &&
-                  subState.published === true && (
+                  subState.published === true &&
+                  !nft.collectionId && (
                     <div className="text-xl flex justify-center items-center w-full min-h-[60px] h-[60px] text-white bg-blue-600 hover:bg-blue-500 hover:drop-shadow-lg transition-all mx-2 rounded-xl">
                       {loadingBuy === false ? (
                         <button
