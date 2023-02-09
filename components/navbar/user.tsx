@@ -9,10 +9,6 @@ const UserMenuNavBar = ({ menu }: { menu: boolean }) => {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
 
-  if (theme === 'system') {
-    setTheme('dark')
-  }
-
   return (
     <>
       {session ? (
